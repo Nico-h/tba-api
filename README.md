@@ -8,8 +8,6 @@ Run the api
 
 `docker run -dit -p 8080:80 -p 4306:3306 --name tba-api tba-env`
 
-Open browser at http://localhost:8080/index.php to test the container
-
 Connect to the container
 
 `docker exec -it tba-api /bin/bash`
@@ -24,7 +22,7 @@ Initialize DB
 
 ##API Routes
 
-GET /touraments : list all tournaments
+GET /tournaments : list all tournaments
 
 GET /tournament/{id}/games : list all games of a tournament
 

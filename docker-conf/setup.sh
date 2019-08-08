@@ -1,8 +1,0 @@
-#!/bin/bash
-
-DBUSER=tba
-
-mysql -e "CREATE USER '${DBUSER}'@'%' IDENTIFIED BY '${DBUSER}';"
-mysql -e "GRANT ALL PRIVILEGES ON ${DBUSER}.* TO '${DBUSER}'@'%';"
-mysql -e "FLUSH PRIVILEGES;"
-mysql -e "CREATE DATABASE ${DBUSER} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
