@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\Player;
 use App\Traits\ObjectFactory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,5 +84,30 @@ class PlayerController extends AbstractController {
      */
     private function hasPlayerWon($playerId, $playerWonId) {
         return $playerId == $playerWonId;
+    }
+
+    /**
+     * @route("/player", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addPlayer(Request $request) {
+
+        $playerName = $request->get("name");
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $existingPlayer = $this->getDoctrine()->getRepository(Player::class)->findOneBy(["name" => $playerName]);
+        if(!$existingPlayer){
+            $player = new Player();
+            $player->setName($playerName);
+
+            $entityManager->persist($player);
+            $entityManager->flush();
+
+            return new JsonResponse("Player saved", 201);
+        } else {
+            return new JsonResponse("Player already exists", 200);
+        }
     }
 }
